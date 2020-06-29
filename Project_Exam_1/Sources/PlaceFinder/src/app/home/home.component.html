@@ -1,3 +1,8 @@
+<!-- Placeholders for user entering search criteria -->
 <input type="text" placeholder="Venue" [(ngModel)]="venue">
 <input type="text" placeholder="Location" [(ngModel)]="location">
-<button (click)="searchPlace()">Search</button>
+<button (click)="searchVenues()">Search</button>
+<!-- Placeholder for the user selecting a place -->
+<button (click)="getDetails(0)">Select Option</button>
+<!-- Placholder for proper implementation of Favorites -->
+<button routerLink="/favorites">Favorites</button>
