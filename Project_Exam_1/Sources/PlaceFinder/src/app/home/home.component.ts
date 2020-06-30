@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -12,16 +12,28 @@ export class HomeComponent implements OnInit {
   location: string;
   results: any;
   header: any;
+  venueList = [];
+  currentLat: any;
+  currentLong: any;
+  geolocationPosition: any;
 
   constructor(private http: HttpClient) {
     this.venue = 'museum';
     this.location = 'Kansas City, KS';
     this.header = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + environment.yelp_key });
+      Authorization: 'Bearer ' + environment.yelp_key
+    });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    // document.body.classList.add('bg-img');
+    window.navigator.geolocation.getCurrentPosition(
+      position => {
+        this.geolocationPosition = position;
+        this.currentLat = position.coords.latitude;
+        this.currentLong = position.coords.longitude;
+      });
   }
 
   searchPlace() {
@@ -33,7 +45,7 @@ export class HomeComponent implements OnInit {
         '&client_secret=' + environment.foursquare_secret +
         '&v=20200626')
         .subscribe((data: any) => {
-          console.log(data);
+          // console.log(data);
           this.results = data.response.venues;
           this.getReview();
         });
@@ -47,13 +59,24 @@ export class HomeComponent implements OnInit {
       '&city=' + this.results[i].location.city +
       '&state=' + this.results[i].location.state +
       '&country=' + this.results[i].location.cc +
-      '&limit=5', { headers: this.header })
-      .subscribe((business: any) => { this.getDetails(business.businesses[0].id); });
+      '&limit=5', {headers: this.header})
+      .subscribe((business: any) => {
+          this.getDetails(business.businesses[0].id);
+      });
   }
 
   getDetails(id) {
+    let index = 0;
     this.http.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/' +
-      id, { headers: this.header })
-      .subscribe((details: any) => { console.log(details); });
+      id, {headers: this.header})
+      .subscribe((details: any) => {
+          console.log(details);
+          this.venueList[index] = {
+            name: details.name,
+            location: details.location
+          };
+          index++;
+        }
+      );
   }
 }

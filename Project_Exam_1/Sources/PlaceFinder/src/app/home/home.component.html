@@ -1,3 +1,45 @@
-<input type="text" placeholder="Venue" [(ngModel)]="venue">
-<input type="text" placeholder="Location" [(ngModel)]="location">
-<button (click)="searchPlace()">Search</button>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">Search for Places Nearby</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/favorites">Favorites</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<form class="border border-light p-5">
+  <p class="h4 mb-4">Enter the place you want to find in an area</p>
+  <label class="label" for="venueInput" style="font-size: xx-large"> Venue </label>
+  <input type="text" class="form-control mb-4" placeholder="Venue" [(ngModel)]="venue" name="Venue" id="venueInput">
+  <label class="label" style="font-size: xx-large" for="locationInput"> Location </label>
+  <input type="text" class="form-control mb-4" placeholder="Location" [(ngModel)]="location" name="Location" id="locationInput">
+  <button (click)="searchPlace()" type="button" class="btn btn-primary" style="margin-right: 5px">Search</button>
+  <a routerLink="/favorites" ><button type="button" class="btn btn-primary">Favorites</button ></a>
+</form>
+
+<div class="col-lg-12">
+  <div class="card bg-transparent">
+    <div class="card-heading"><b>Nearby Places</b></div>
+    <div class="card-body">
+      <div *ngFor="let venue of venueList" class="list-group-item clearfix">
+        <div class="">
+          <h4 class="list-group-item-heading">{{ venue.name }}, {{ venue.location.city }}, {{ venue.location.country }}</h4>
+        </div>
+        <span class="pull-right">
+             <a href="http://maps.google.com/maps?saddr={{currentLat}},{{currentLong}}
+             &daddr={{venue.location.address1}},{{ venue.location.city}}" target="_blank">
+               <img src="../../assets/google.png" style="width: 30px; height: 30px;"></a>
+      </span>
+      </div>
+    </div>
+  </div>
+</div>
