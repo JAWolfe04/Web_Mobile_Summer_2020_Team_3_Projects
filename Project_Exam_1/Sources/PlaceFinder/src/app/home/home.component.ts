@@ -9,9 +9,6 @@ import { DataService } from '../services/data.service';
 export class HomeComponent implements OnInit {
   venue: string;
   location: string;
-  results: any;
-
-  header: any;
   venueList = [];
   currentLat: any;
   currentLong: any;
@@ -20,11 +17,6 @@ export class HomeComponent implements OnInit {
   constructor(private dataService: DataService) {
     this.venue = 'museum';
     this.location = 'Kansas City, KS';
-
-    this.header = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + environment.yelp_key
-    });
   }
 
   ngOnInit() {
@@ -41,14 +33,13 @@ export class HomeComponent implements OnInit {
   searchVenues() {
     if (this.location != null && this.location !== '' && this.venue != null && this.venue !== '') {
       this.dataService.getVenues(this.location, this.venue).subscribe((data: any) => {
-        this.results = data.response.venues;
-        console.log(this.results);
+        this.venueList = data.response.venues;
       });
     }
   }
 
   // Pass the index of the selected item from the results list
   getDetails(index) {
-    this.dataService.getDetails(this.results[index]);
+    this.dataService.getVenueID(this.venueList[index]);
   }
 }

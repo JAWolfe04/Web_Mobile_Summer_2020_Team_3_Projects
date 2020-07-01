@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Favorite } from '../interfaces/favorite';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -10,8 +9,7 @@ import { Router } from '@angular/router';
 })
 export class DataService {
   private readonly header: any;
-  private user: string;
-  private venueID: string;
+  user: any;
 
   constructor(private http: HttpClient, private router: Router) {
     this.header = new HttpHeaders({
@@ -21,17 +19,20 @@ export class DataService {
 
   loginUser(user: string) {
     if (this.user !== null && this.user !== '') {
-      this.user = user;
-      this.router.navigateByUrl('/home');
+      this.http.get(`${environment.app_server_address}/loginUser/${user}`)
+        .subscribe((data: any) => {
+        this.user = data._id;
+        this.router.navigateByUrl('/home');
+      });
     }
   }
 
-  getFavorites(user: string): Observable<Favorite[]> {
-    return this.http.get<Favorite[]>(`${environment.app_server_address}/getFavorites/${user}`);
+  getFavorites(user: string): Observable<any> {
+    return this.http.get<any>(`${environment.app_server_address}/getFavorites/${user}`);
   }
 
-  addFavorite(favorite: Favorite) {
-    return this.http.post(`${environment.app_server_address}/addFavorite`, favorite);
+  addFavorite(favorite: any) {
+    return this.http.post(`${environment.app_server_address}/addFavorite/${this.user}`, favorite);
   }
 
   getVenues(location, venue) {
@@ -43,25 +44,24 @@ export class DataService {
       '&v=20200626');
   }
 
-  getDetails(venue) {
-    this.getVenueID(venue).subscribe((business: any) => {
-      this.venueID = business.businesses[0].id;
-      this.router.navigateByUrl('/info');
-    });
-  }
-
-  private getVenueID(venue) {
+  getVenueID(venue) {
     return this.http.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/matches' +
       '?name=' + venue.name +
       '&address1=' + venue.location.address +
       '&city=' + venue.location.city +
       '&state=' + venue.location.state +
       '&country=' + venue.location.cc +
-      '&limit=5', { headers: this.header });
+      '&limit=5', { headers: this.header }).subscribe((business: any) => {
+        if (business.businesses.length === 0) {
+          console.log('No information on this location');
+        } else {
+          this.router.navigateByUrl(`/info/${business.businesses[0].id}`);
+        }
+    });
   }
 
-  getCurrentVenueDetails() {
+  getVenueDetails(id) {
     return this.http.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/' +
-      this.venueID, { headers: this.header });
+      id, { headers: this.header });
   }
 }
