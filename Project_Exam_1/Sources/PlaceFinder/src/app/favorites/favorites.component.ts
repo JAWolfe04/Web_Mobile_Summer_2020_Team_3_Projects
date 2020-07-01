@@ -12,7 +12,7 @@ export class FavoritesComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.getFavorites('Jonathan').subscribe((data: any) => {
+    this.dataService.getFavorites(this.dataService.user).subscribe((data: any) => {
       this.favorites = data;
     });
   }

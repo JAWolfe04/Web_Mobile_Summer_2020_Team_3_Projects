@@ -50,8 +50,8 @@ router.post('/addFavorite/:id', (req, res, next) => {
     });
 });
 
-router.get('/getFavorites/:user', (req, res, next) => {
-    Users.findOne({ user: req.params.user },
+router.get('/getFavorites/:id', (req, res, next) => {
+    Users.findById(req.params.id,
         (err, post) => {
         if (err) return next(err);
         res.json(post);});
