@@ -11,12 +11,31 @@ export class HomeComponent implements OnInit {
   location: string;
   results: any;
 
+  header: any;
+  venueList = [];
+  currentLat: any;
+  currentLong: any;
+  geolocationPosition: any;
+
   constructor(private dataService: DataService) {
     this.venue = 'museum';
     this.location = 'Kansas City, KS';
+
+    this.header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + environment.yelp_key
+    });
   }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    // document.body.classList.add('bg-img');
+    window.navigator.geolocation.getCurrentPosition(
+      position => {
+        this.geolocationPosition = position;
+        this.currentLat = position.coords.latitude;
+        this.currentLong = position.coords.longitude;
+      });
+  }
 
   // Find a list of venues that matches the location and venue description
   searchVenues() {

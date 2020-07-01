@@ -15,15 +15,4 @@ export class InfoComponent implements OnInit {
       console.log(details);
     });
   }
-
-  addFavorite() {
-    const favorite = {
-      user: 'Jonathan',
-      name: 'test',
-      id: '12345678'
-    }
-
-    this.dataService.addFavorite(favorite).subscribe(
-      async error => { console.log(error); });
-  }
 }
