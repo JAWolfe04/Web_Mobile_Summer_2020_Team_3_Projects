@@ -27,8 +27,8 @@ export class DataService {
     }
   }
 
-  getFavorites(user: string): Observable<any> {
-    return this.http.get<any>(`${environment.app_server_address}/getFavorites/${user}`);
+  getFavorites(id: string): Observable<any> {
+    return this.http.get<any>(`${environment.app_server_address}/getFavorites/${id}`);
   }
 
   addFavorite(favorite: any) {
