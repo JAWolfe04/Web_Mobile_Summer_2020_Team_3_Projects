@@ -1,1 +1,12 @@
-<p>info works!</p>
+<div class="row">
+  <div class="col">
+    <button routerLink="/home">Back</button>
+    <button (click)="addFavorite()">Favorite</button>
+    <div *ngIf="info !== undefined">
+      <h1>{{info.name}}</h1>
+      <p>{{info.display_phone}}</p>
+      <p *ngFor="let line of info.location.display_address">{{line}}</p>
+    </div>
+  </div>
+</div>
+

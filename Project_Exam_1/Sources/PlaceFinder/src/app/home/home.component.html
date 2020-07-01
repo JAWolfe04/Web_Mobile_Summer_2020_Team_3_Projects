@@ -1,8 +1,25 @@
-<!-- Placeholders for user entering search criteria -->
-<input type="text" placeholder="Venue" [(ngModel)]="venue">
-<input type="text" placeholder="Location" [(ngModel)]="location">
-<button (click)="searchVenues()">Search</button>
-<!-- Placeholder for the user selecting a place -->
-<button (click)="getDetails(0)">Select Option</button>
-<!-- Placholder for proper implementation of Favorites -->
-<button routerLink="/favorites">Favorites</button>
+<form class="border border-light p-5">
+  <p class="h4 mb-4">Enter the place you want to find in an area</p>
+  <label class="label" for="venueInput" style="font-size: xx-large"> Venue </label>
+  <input type="text" class="form-control mb-4" placeholder="Venue" [(ngModel)]="venue" name="Venue" id="venueInput">
+  <label class="label" style="font-size: xx-large" for="locationInput"> Location </label>
+  <input type="text" class="form-control mb-4" placeholder="Location" [(ngModel)]="location" name="Location" id="locationInput">
+  <button (click)="searchVenues()" type="button" class="btn btn-primary" style="margin-right: 5px">Search</button>
+  <a routerLink="/favorites" ><button type="button" class="btn btn-primary">Favorites</button ></a>
+</form>
+
+<div *ngIf="venueList.length !== 0" class="col-lg-12">
+  <div class="card bg-transparent">
+    <div class="card-heading"><b>Nearby Places</b></div>
+    <div class="card-body">
+      <div *ngFor="let venue of venueList; index as i" class="list-group-item clearfix" (click)="getDetails(i)">
+        <h4 class="list-group-item-heading">{{ venue.name }}, {{ venue.location.city }}, {{ venue.location.country }}</h4>
+        <span class="pull-right">
+             <a href="http://maps.google.com/maps?saddr={{currentLat}},{{currentLong}}
+             &daddr={{venue.location.address1}},{{ venue.location.city}}" target="_blank">
+               <img src="../../assets/google.png" style="width: 30px; height: 30px;"></a>
+      </span>
+      </div>
+    </div>
+  </div>
+</div>

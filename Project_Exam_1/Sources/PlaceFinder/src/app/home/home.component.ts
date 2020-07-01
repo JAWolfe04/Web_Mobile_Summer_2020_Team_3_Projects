@@ -9,27 +9,37 @@ import { DataService } from '../services/data.service';
 export class HomeComponent implements OnInit {
   venue: string;
   location: string;
-  results: any;
+  venueList = [];
+  currentLat: any;
+  currentLong: any;
+  geolocationPosition: any;
 
   constructor(private dataService: DataService) {
     this.venue = 'museum';
     this.location = 'Kansas City, KS';
   }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    // document.body.classList.add('bg-img');
+    window.navigator.geolocation.getCurrentPosition(
+      position => {
+        this.geolocationPosition = position;
+        this.currentLat = position.coords.latitude;
+        this.currentLong = position.coords.longitude;
+      });
+  }
 
   // Find a list of venues that matches the location and venue description
   searchVenues() {
     if (this.location != null && this.location !== '' && this.venue != null && this.venue !== '') {
       this.dataService.getVenues(this.location, this.venue).subscribe((data: any) => {
-        this.results = data.response.venues;
-        console.log(this.results);
+        this.venueList = data.response.venues;
       });
     }
   }
 
   // Pass the index of the selected item from the results list
   getDetails(index) {
-    this.dataService.getDetails(this.results[index]);
+    this.dataService.getVenueID(this.venueList[index]);
   }
 }

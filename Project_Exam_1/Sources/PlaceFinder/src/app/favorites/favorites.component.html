@@ -1,1 +1,11 @@
-<p>favorites works!</p>
+<div class="row">
+  <div class="col">
+    <button routerLink="/home">Back</button>
+    <div *ngIf="favorites !== undefined">
+      <div *ngFor="let venue of favorites.venueNames; index as i" class="list-group-item clearfix"
+           routerLink="/info/{{favorites.venueIDs[i]}}">
+        <h4 class="list-group-item-heading">{{ venue }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
