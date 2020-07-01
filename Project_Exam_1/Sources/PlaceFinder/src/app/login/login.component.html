@@ -1,7 +1,7 @@
-<div class="row">
-  <div class="col">
-    <!-- Placeholders for UI element -->
-    <input type="text" placeholder="Enter Username" [(ngModel)]="user">
-    <button (click)="loginUser()">Login</button>
-  </div>
-</div>
+<form class="border border-light p-5">
+  <p class="h4 mb-4">Please Enter your Username to Login</p>
+  <label class="label" for="userInput" style="font-size: xx-large"> Username </label>
+  <input type="text" class="form-control mb-4" placeholder="Enter Username" [(ngModel)]="user" name="user" id="userInput">
+  <button (click)="loginUser()" type="button" class="btn btn-primary">Login</button>
+</form>
+
