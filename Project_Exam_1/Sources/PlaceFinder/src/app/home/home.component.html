@@ -22,7 +22,7 @@
   <input type="text" class="form-control mb-4" placeholder="Venue" [(ngModel)]="venue" name="Venue" id="venueInput">
   <label class="label" style="font-size: xx-large" for="locationInput"> Location </label>
   <input type="text" class="form-control mb-4" placeholder="Location" [(ngModel)]="location" name="Location" id="locationInput">
-  <button (click)="searchPlace()" type="button" class="btn btn-primary" style="margin-right: 5px">Search</button>
+  <button (click)="searchVenues()" type="button" class="btn btn-primary" style="margin-right: 5px">Search</button>
   <a routerLink="/favorites" ><button type="button" class="btn btn-primary">Favorites</button ></a>
 </form>
 
@@ -30,7 +30,7 @@
   <div class="card bg-transparent">
     <div class="card-heading"><b>Nearby Places</b></div>
     <div class="card-body">
-      <div *ngFor="let venue of venueList" class="list-group-item clearfix">
+      <div *ngFor="let venue of venueList" class="list-group-item clearfix" <!--(click)="getDetails(0)-->>
         <div class="">
           <h4 class="list-group-item-heading">{{ venue.name }}, {{ venue.location.city }}, {{ venue.location.country }}</h4>
         </div>

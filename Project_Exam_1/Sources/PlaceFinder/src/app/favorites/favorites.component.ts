@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../services/data.service';
+import { Favorite } from '../interfaces/favorite';
 
 @Component({
   selector: 'app-favorites',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./favorites.component.css']
 })
 export class FavoritesComponent implements OnInit {
+  favorites: Favorite[];
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.getFavorites('Jonathan').subscribe((data: any) => {
+      this.favorites = data;
+    });
   }
-
 }
