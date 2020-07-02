@@ -12,6 +12,7 @@ export class FavoritesComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    document.body.classList.add('bg-img');
     this.dataService.getFavorites(this.dataService.user).subscribe((data: any) => {
       this.favorites = data;
     });

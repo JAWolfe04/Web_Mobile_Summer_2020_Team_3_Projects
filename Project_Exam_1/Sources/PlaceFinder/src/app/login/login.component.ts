@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    document.body.classList.add('bg-img');
   }
 
   loginUser() {

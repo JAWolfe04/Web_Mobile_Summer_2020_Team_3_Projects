@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // document.body.classList.add('bg-img');
+    document.body.classList.add('bg-img');
     window.navigator.geolocation.getCurrentPosition(
       position => {
         this.geolocationPosition = position;

@@ -13,6 +13,7 @@ export class InfoComponent implements OnInit {
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    document.body.classList.add('bg-img');
     this.dataService.getVenueDetails(this.route.snapshot.params.id)
       .subscribe((details: any) => {
         this.info = details;
