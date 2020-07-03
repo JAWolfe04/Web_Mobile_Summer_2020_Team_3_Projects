@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8ef50dd-be1b-4318-97ae-784f49cb87e0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Documentation/FavoritesPage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Documentation/InitialHomePage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Documentation/LoginPage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Documentation/MongoDatabase.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Documentation/PlacInfoPage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Documentation/SearchResultPage.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlaceFinder/src/app/favorites/favorites.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/PlaceFinder/src/app/favorites/favorites.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlaceFinder/src/app/services/data.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/PlaceFinder/src/app/services/data.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlaceFinder/src/app/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/PlaceFinder/src/app/home/home.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +49,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Users\Jonathan\Desktop\UMKC\CS 5590 WebMobile\Web_Mobile_Summer_2020_Team_3_Projects\Project_Exam_1\Sources\PlaceFinder\node_modules\typescript\lib" />
   </component>
-  <component name="RunManager" selected="npm.Run Server">
+  <component name="RunManager" selected="npm.Run App">
     <configuration name="Tests (Sources)" type="JavaScriptTestRunnerKarma">
       <config-file value="$PROJECT_DIR$/karma.conf.js" />
       <karma-package-dir value="$PROJECT_DIR$/PlaceFinder/node_modules/@angular/cli" />
@@ -110,6 +114,8 @@
       <workItem from="1593550647235" duration="612000" />
       <workItem from="1593584682667" duration="14035000" />
       <workItem from="1593618095352" duration="4676000" />
+      <workItem from="1593736092868" duration="254000" />
+      <workItem from="1593739460273" duration="2574000" />
     </task>
     <servers />
   </component>
@@ -136,21 +142,21 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="462" y="106" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1593489322722" />
-    <state width="1345" height="160" key="GridCell.Tab.0.bottom" timestamp="1593622911953">
+    <state width="1345" height="160" key="GridCell.Tab.0.bottom" timestamp="1593742626175">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="160" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1593622911953" />
-    <state width="1345" height="160" key="GridCell.Tab.0.center" timestamp="1593622911953">
+    <state width="1345" height="160" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1593742626175" />
+    <state width="1345" height="160" key="GridCell.Tab.0.center" timestamp="1593742626175">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="160" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1593622911953" />
-    <state width="1345" height="160" key="GridCell.Tab.0.left" timestamp="1593622911953">
+    <state width="1345" height="160" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1593742626175" />
+    <state width="1345" height="160" key="GridCell.Tab.0.left" timestamp="1593742626174">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="160" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1593622911953" />
-    <state width="1345" height="160" key="GridCell.Tab.0.right" timestamp="1593622911953">
+    <state width="1345" height="160" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1593742626174" />
+    <state width="1345" height="160" key="GridCell.Tab.0.right" timestamp="1593742626175">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="160" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1593622911953" />
+    <state width="1345" height="160" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1593742626175" />
   </component>
 </project>

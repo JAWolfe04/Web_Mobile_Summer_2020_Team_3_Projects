@@ -17,8 +17,6 @@ export class HomeComponent implements OnInit {
   geolocationPosition: any;
 
   constructor(private dataService: DataService) {
-    this.venue = 'museum';
-    this.location = 'Kansas City, KS';
   }
 
   ngOnInit() {
