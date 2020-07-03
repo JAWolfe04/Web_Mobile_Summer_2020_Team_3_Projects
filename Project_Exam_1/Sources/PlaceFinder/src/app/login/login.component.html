@@ -1,1 +1,7 @@
-<p>login works!</p>
+<form class="border border-light p-5">
+  <p class="h4 mb-4">Please Enter your Username to Login</p>
+  <label class="label" for="userInput" style="font-size: xx-large"> Username </label>
+  <input type="text" class="form-control mb-4" placeholder="Enter Username" [(ngModel)]="user" name="user" id="userInput">
+  <button (click)="loginUser()" type="button" class="btn btn-primary">Login</button>
+</form>
+

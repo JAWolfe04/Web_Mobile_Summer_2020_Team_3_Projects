@@ -1,1 +1,15 @@
-<p>info works!</p>
+<form class="border border-light p-5">
+  <button routerLink="/home" type="button" class="btn btn-primary">Back</button>
+  <p class="h4 mb-4" style="margin-top: 10px">Place Information</p>
+  <div *ngIf="info !==  undefined" class="col-lg-12" style="margin-top: 10px">
+    <div class="card bg-transparent">
+      <div class="card-body bg-transparent">
+        <h4 class="list-group-item-heading">{{info.name}}</h4>
+        <h5 class="list-group-item-heading">{{info.display_phone}}</h5>
+        <h5 *ngFor="let line of info.location.display_address" class="list-group-item clearfix bg-transparent">{{line}}</h5>
+      </div>
+    </div>
+  </div>
+  <button (click)="addFavorite()" type="button" class="btn btn-primary" style="margin-top: 20px">Favorite</button>
+  <a routerLink="/favorites" ><button type="button" class="btn btn-primary" style="margin-left: 10px; margin-top: 20px">Favorites Page</button ></a>
+</form>
