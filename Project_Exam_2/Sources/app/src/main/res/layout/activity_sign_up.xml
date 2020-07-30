@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="25dp"
+    android:background="@drawable/backgroundsign"
     tools:context=".SignUpActivity">
 
     <LinearLayout
@@ -13,62 +15,53 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp">
 
-            <LinearLayout
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="5dp">
+        <EditText
+            android:id="@+id/etFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:hint="  First Name"
+            android:textColorHint="@color/quantum_white_100" />
 
-                <EditText
-                    android:id="@+id/etFirstName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="  First Name"
-                    android:textColorHint="#bbbbbb" />
-
-                <EditText
-                    android:id="@+id/etLastName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="30dp"
-                    android:hint="  Last Name"
-                    android:textColorHint="#bbbbbb" />
-            </LinearLayout>
-        </GridLayout>
+        <EditText
+            android:id="@+id/etLastName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:hint="  Last Name"
+            android:textColorHint="@color/quantum_white_100" />
 
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:hint="Email"
             android:padding="10dp"
-            android:textColorHint="#bbbbbb" />
+            android:textColorHint="@color/quantum_black_hint_text" />
 
         <EditText
             android:id="@+id/etPass"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="-2dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:hint="Password"
             android:inputType="numberPassword"
             android:padding="10dp"
-            android:textColorHint="#bbbbbb" />
+            android:textColorHint="@color/quantum_black_hint_text" />
 
         <Button
             android:id="@+id/btnSingIn"
             style="@style/DefaultButtonText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginTop="50dp"
             android:onClick="onSignUp"
             android:padding="10dp"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:textColor="@color/quantum_greywhite1000"
             android:text="Create Account" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

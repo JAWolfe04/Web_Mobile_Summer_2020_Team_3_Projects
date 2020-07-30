@@ -1,20 +1,15 @@
 package com.project.mobile;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -25,39 +20,28 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-public class MappingActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MappingActivity extends AppCompatActivity {
     private SpeechRecognizer speechRecognizer;
     private Intent speechRecognizerIntent;
+    TabAdapter adapter;
     EditText searchBox;
     ImageButton micButton;
     boolean micToggle = false;
-    double latitude = 0, longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapping);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-
         micButton = findViewById(R.id.mic);
         searchBox = findViewById(R.id.searchBox);
 
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.RECORD_AUDIO) !=
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
                 PackageManager.PERMISSION_GRANTED){
             checkPermission();
         }
@@ -116,6 +100,30 @@ public class MappingActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onEvent(int i, Bundle bundle) { }
         });
+
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        final ViewPager viewPager = findViewById(R.id.viewPager);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Map"));
+        tabLayout.addTab(tabLayout.newTab().setText("Results"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        adapter = new TabAdapter(this,getSupportFragmentManager(),
+                tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     public void getVoiceInput(View view) {
@@ -127,65 +135,14 @@ public class MappingActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public void search(View view) {
-
+        EditText searchBox = findViewById(R.id.searchBox);
+        ((PlacesMap) adapter.getItem(0)).searchMap(
+                searchBox.getText().toString(),
+                getResources().getString(R.string.google_ip_key));
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        GoogleMap map = googleMap;
-        Geocoder geocoder = new Geocoder(this);
-        StringBuilder userAddress = new StringBuilder();
-
-        final LocationManager userCurrentLocation = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener userCurrentLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) { }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) { }
-
-            @Override
-            public void onProviderEnabled(String s) { }
-
-            @Override
-            public void onProviderDisabled(String s) { }
-        };
-        LatLng userCurrentLocationCorodinates = null;
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat
-                .checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //show message or ask permissions from the user.
-            return;
-        }
-
-        //Getting the current location of the user.
-        userCurrentLocation.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-                userCurrentLocationListener);
-        Location location = userCurrentLocation.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        userCurrentLocationCorodinates = new LatLng(latitude, longitude);
-
-        //Getting the address of the user based on latitude and longitude.
-        try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            String country = addresses.get(0).getCountryName();
-            String postalCode = addresses.get(0).getPostalCode();
-            String knownName = addresses.get(0).getFeatureName();
-
-            userAddress.append(knownName + ", " + city + ", " + state + ", " + country + " " + postalCode).append("\t");
-            Toast.makeText(this, " " + userAddress, Toast.LENGTH_SHORT).show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        //Setting our image as the marker icon.
-        map.addMarker(new MarkerOptions().position(userCurrentLocationCorodinates));
-        //Setting the zoom level of the map.
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userCurrentLocationCorodinates, 7));
+    public void favorites(View view) {
+        startActivity(new Intent(this, FavoriteActivity.class));
     }
 
     @Override
