@@ -1,27 +1,19 @@
 package com.project.mobile;
 
 public class Place {
-    private String name = "", types = "", id = "";
-    private double latitude = 0.0, longitude = 0.0;
+    private String name = "", types = "", id = "", address = "";
 
-    public Place(String id, double latitude, double longitude, String name, String types) {
+    public Place() {}
+
+    public Place(String id, String name, String types, String address) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.name = name;
         this.types = types;
+        this.address = address;
     }
 
     public String getId() {
         return id;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
     }
 
     public String getName() {
@@ -31,4 +23,6 @@ public class Place {
     public String getTypes() {
         return types;
     }
+
+    public String getAddress() { return address; }
 }

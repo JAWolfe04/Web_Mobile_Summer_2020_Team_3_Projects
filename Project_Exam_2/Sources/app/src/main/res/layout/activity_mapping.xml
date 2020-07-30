@@ -46,9 +46,11 @@
         android:id="@+id/viewPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/favoritesButton"
         android:layout_below="@+id/tabLayout"/>
 
     <Button
+        android:id="@+id/favoritesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="favorites"

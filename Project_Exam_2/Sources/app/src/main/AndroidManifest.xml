@@ -17,14 +17,14 @@
 
         <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.Main" />
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MappingActivity" />
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".FavoriteActivity"></activity>
+        <activity android:name=".FavoriteActivity" />
         <activity android:name=".ReviewActivity" />
 
         <meta-data
@@ -33,8 +33,5 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-
     </application>
-
 </manifest>

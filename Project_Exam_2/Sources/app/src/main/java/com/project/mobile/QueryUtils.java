@@ -3,7 +3,6 @@ package com.project.mobile;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -20,11 +19,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueryUtils extends ActivityCompat {
+public class QueryUtils {
     String LOG_TAG = QueryUtils.class.getSimpleName();
     GoogleMap map;
+    PlacesAdapter mAdapter;
 
-    private QueryUtils() {}
+    private QueryUtils() { }
 
     private static class Singleton {
         private static final QueryUtils instance = new QueryUtils();
@@ -34,34 +34,22 @@ public class QueryUtils extends ActivityCompat {
         return Singleton.instance;
     }
 
-    public void getPlaces(String searchTerm, double lat, double lng, String key, GoogleMap map) {
+    public void getPlaces(String searchTerm, double lat, double lng, String key, GoogleMap map, PlacesAdapter mAdapter) {
         String query = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
                 lat + "," + lng + "&rankby=distance&type=address&keyword=" + searchTerm + "&key=" + key;
         this.map = map;
+        this.mAdapter = mAdapter;
         PlacesAsyncTask asyncTask = new PlacesAsyncTask();
         asyncTask.execute(query);
     }
 
-    public PlaceDetails getPlaceDetails(String ID) {
-        PlaceDetails details = new PlaceDetails();
+    public void getPlaceDetails(String ID, String key) {
+        String query = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" +
+                ID + "&fields=opening_hours/weekday_text,formatted_address,rating,website," +
+                "formatted_phone_number&key=" + key;
 
-        try{
-        } catch (JsonIOException e) {
-            Log.e(LOG_TAG, "JSON Exception:  ", e);
-        }
-
-        return details;
-    }
-
-    public List<Review> getReviews() {
-        List<Review> reviews = new ArrayList<>();
-
-        try{
-        } catch (JsonIOException e) {
-            Log.e(LOG_TAG, "JSON Exception:  ", e);
-        }
-
-        return reviews;
+        DetailsAsyncTask asyncTask = new DetailsAsyncTask();
+        asyncTask.execute(query);
     }
 
     private String getQuery(String query) {
@@ -92,8 +80,37 @@ public class QueryUtils extends ActivityCompat {
                 urlConnection.disconnect();
         }
 
-        Log.e(LOG_TAG, query);
         return queryResult;
+    }
+
+    private class DetailsAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return getQuery(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String queryResult) {
+            try{
+                JSONObject result = new JSONObject(queryResult).getJSONObject("result");
+                String times = "";
+                JSONArray timesArray = result.getJSONObject("opening_hours")
+                        .getJSONArray("weekday_text");
+                for(int i = 0; i < timesArray.length(); ++i) {
+                        times += timesArray.getString(i) + "\n";
+                }
+                ReviewActivity.setupActivity(
+                        times,
+                        result.getString("formatted_address"),
+                        result.getString("formatted_phone_number"),
+                        result.getString("website"),
+                        "Rating: " + result.getString("rating") + "/5"
+                );
+            } catch (JsonIOException | JSONException e) {
+                Log.e(LOG_TAG, "JSON Exception:  ", e);
+            }
+        }
     }
 
     private class PlacesAsyncTask extends AsyncTask<String, Void, String> {
@@ -106,23 +123,35 @@ public class QueryUtils extends ActivityCompat {
         protected void onPostExecute(String queryResult) {
             try{
                 List<Place> places = new ArrayList<>();
-                Log.e(LOG_TAG, queryResult);
                 JSONObject jsonObject = new JSONObject(queryResult);
                 JSONArray jsonArray = jsonObject.getJSONArray("results");
                 for(int i = 0; i < jsonArray.length(); ++i) {
                     JSONObject result = jsonArray.getJSONObject(i);
                     JSONObject location = result.getJSONObject("geometry").getJSONObject("location");
+                    String types ="";
+                    JSONArray typesArray = result.getJSONArray("types");
+                    for(int j = 0; j < typesArray.length(); ++j) {
+                        if(j == 0)
+                            types += typesArray.getString(0).replace('_', ' ');
+                        else
+                            types += ", " + typesArray.getString(j).replace('_', ' ');
+                    }
                     places.add(new Place(
-                            result.getString("id"),
-                            location.getDouble("lat"),
-                            location.getDouble("lng"),
+                            result.getString("place_id"),
                             result.getString("name"),
-                            result.getJSONArray("types").toString()));
+                            types,
+                            result.getString("vicinity")
+                    ));
 
                     map.addMarker(new MarkerOptions().position(new LatLng(
                             location.getDouble("lat"),
                             location.getDouble("lng"))));
                 }
+                mAdapter.clear();
+
+                if(places != null && !places.isEmpty())
+                    mAdapter.addAll(places);
+
             } catch (JsonIOException | JSONException e) {
                 Log.e(LOG_TAG, "JSON Exception:  ", e);
             }

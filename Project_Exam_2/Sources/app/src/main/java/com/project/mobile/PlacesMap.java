@@ -85,10 +85,6 @@ public class PlacesMap extends Fragment {
         return rootView;
     }
 
-    public void searchMap(String term, String key) {
-        QueryUtils.getInstance().getPlaces(term, latitude, longitude, key, map);
-    }
-
     @Override
     public void onResume() {
         super.onResume();

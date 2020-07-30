@@ -29,6 +29,12 @@ public class favoritesAdaptor extends ArrayAdapter<Place> {
         TextView placeView = listItemView.findViewById(R.id.placeName);
         placeView.setText(currentPlace.getName());
 
+        TextView placeAddressView = listItemView.findViewById(R.id.placeAddress);
+        placeAddressView.setText(currentPlace.getAddress());
+
+        TextView placeTypesView = listItemView.findViewById(R.id.placeTypes);
+        placeTypesView.setText(currentPlace.getTypes());
+
         return listItemView;
     }
 }

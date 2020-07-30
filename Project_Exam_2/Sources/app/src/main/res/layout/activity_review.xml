@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ReviewActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/reviewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/reviewAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
+        android:layout_below="@+id/reviewTitle"/>
+
+    <TextView
+        android:id="@+id/reviewPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
+        android:layout_below="@+id/reviewAddress"/>
+
+    <TextView
+        android:id="@+id/reviewSite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:clickable="true"
+        android:autoLink="web"
+        android:textSize="12sp"
+        android:layout_below="@+id/reviewPhone" />
+
+    <TextView
+        android:id="@+id/reviewTypes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
+        android:layout_below="@+id/reviewSite"/>
+
+    <TextView
+        android:id="@+id/reviewRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
+        android:layout_below="@+id/reviewTypes"/>
+
+    <TextView
+        android:id="@+id/reviewOpen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="12sp"
+        android:layout_below="@+id/reviewRating"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Favorite"
+        android:onClick="favoritePlace"/>
+
+</RelativeLayout>

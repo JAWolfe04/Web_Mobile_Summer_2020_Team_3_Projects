@@ -43,10 +43,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void attemptLogin(View v) {
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        boolean invalidAttempt = false;
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
@@ -55,35 +55,38 @@ public class LoginActivity extends AppCompatActivity {
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
+            invalidAttempt = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
+            invalidAttempt = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
-        }
-
-        //authenticate user
-        auth.signInWithEmailAndPassword(email, password)
+            invalidAttempt = true;
+        } else if (!invalidAttempt) {
+            //authenticate user
+            auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                    // If sign in fails, display a message to the user. If sign in succeeds
+                    // the auth state listener will be notified and logic to handle the
+                    // signed in user can be handled in the listener.
 
-                        if (!task.isSuccessful()) {
-                            // there was an error
-                            Toast.makeText(LoginActivity.this, getString(R.string.auth_fail_msg), Toast.LENGTH_LONG).show();
+                    if (!task.isSuccessful()) {
+                        // there was an error
+                        Toast.makeText(LoginActivity.this, getString(R.string.auth_fail_msg), Toast.LENGTH_LONG).show();
 
-                        } else {
-                            Intent intent = new Intent(LoginActivity.this, MappingActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, MappingActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                     }
                 });
+        }
     }
 
     private boolean isEmailValid(String email) {

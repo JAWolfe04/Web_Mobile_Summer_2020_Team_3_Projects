@@ -15,12 +15,14 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -136,9 +138,13 @@ public class MappingActivity extends AppCompatActivity {
 
     public void search(View view) {
         EditText searchBox = findViewById(R.id.searchBox);
-        ((PlacesMap) adapter.getItem(0)).searchMap(
-                searchBox.getText().toString(),
-                getResources().getString(R.string.google_ip_key));
+        PlacesMap placesMapFrag = (PlacesMap) adapter.getItem(0);
+        PlacesList placesListFrag = (PlacesList) adapter.getItem(1);
+
+        QueryUtils.getInstance().getPlaces(searchBox.getText().toString(),
+                placesMapFrag.latitude, placesMapFrag.longitude,
+                getResources().getString(R.string.google_ip_key),
+                placesMapFrag.map, placesListFrag.mAdapter);
     }
 
     public void favorites(View view) {
