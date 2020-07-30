@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, getString(R.string.auth_fail_msg), Toast.LENGTH_LONG).show();
 
                         } else {
-                            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MappingActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -95,12 +95,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void redirectToSignUpPage(View v) {
-        //Intent redirect = new Intent(LoginActivity.this, SignUpActivity.class);
-        //startActivity(redirect);
+        Intent redirect = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(redirect);
     }
 
     public void redirectToForgotPasswordPage(View v) {
-       // Intent redirect = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-      //  startActivity(redirect);
+        Intent redirect = new Intent(LoginActivity.this, ForgotPassword.class);
+        startActivity(redirect);
     }
 }
