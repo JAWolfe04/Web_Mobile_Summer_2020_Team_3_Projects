@@ -34,6 +34,8 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".FavoriteActivity"></activity>
         <activity android:name=".ReviewActivity" />
+        <activity android:name=".FavoriteActivity" />
+        <activity android:name=".ReviewActivity" />
     </application>
 
 </manifest>
